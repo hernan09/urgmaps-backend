@@ -29,6 +29,20 @@ var Schema = mongoose.Schema;
 // var User = require("./user").User;
 mongoose.connect("mongodb://cdt URG:cdt.desa.3.123@ds117623.mlab.com:17623/urgmaps");
 
+mongoose.connection.on('connected', function () {
+  console.log('Mongoose default connection open to ' + dbURI);
+});
+
+// If the connection throws an error
+mongoose.connection.on('error',function (err) {
+  console.log('Mongoose default connection error: ' + err);
+});
+
+// When the connection is disconnected
+mongoose.connection.on('disconnected', function () {
+  console.log('Mongoose default connection disconnected');
+})
+
 var location_schema = new Schema({
     IMEI:Number,
     destination: String,
