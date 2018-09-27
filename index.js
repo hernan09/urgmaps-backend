@@ -30,12 +30,12 @@ var Schema = mongoose.Schema;
 mongoose.connect("mongodb://cdt URG:cdt.desa.3.123@ds117623.mlab.com:17623/urgmaps");
 
 mongoose.connection.on('connected', function () {
-  console.log('Mongoose default connection open to ' + dbURI);
+  console.log('Mongoose CONECTADO ' + dbURI);
 });
 
 // If the connection throws an error
 mongoose.connection.on('error',function (err) {
-  console.log('Mongoose default connection error: ' + err);
+  console.log('Mongoose DESCONECTADO ERROR: ' + err);
 });
 
 // When the connection is disconnected
@@ -73,3 +73,7 @@ app.post("/sendMessageLocation",function(req,res){
         }
     })
 })
+
+app.get('/test', function(req, res) {
+  res.send('hello world');
+});
