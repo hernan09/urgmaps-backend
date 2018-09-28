@@ -48,13 +48,18 @@ var location_schema = new Schema({
 
 var Location = mongoose.model("Location",location_schema);
 
-app.post("/sendMessageLocation",function(req,res){
+app.post("/saveLocation",function(req,res){
     var location = new Location ({
-        IMEI:req.body.IMEI,
-        destination: req.body.destination,
-        lat:req.body.lat,
-        lng:req.body.lng,
-        state:req.body.state
+        // IMEI:req.body.IMEI,
+        // destination: req.body.destination,
+        // lat:req.body.lat,
+        // lng:req.body.lng,
+        // state:req.body.state
+        idIMEI:123456789,
+        destination: "La valle 400",
+        lat:12.123135,
+        lng:312.132132,
+        state: "activo"
     });
 
     location.save().then(function(us){
