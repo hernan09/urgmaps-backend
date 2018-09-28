@@ -3,8 +3,8 @@
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
-var mongoose = require("mongoose");
-var cors = require('express-cross');
+// var mongoose = require("mongoose");
+// var cors = require('express-cross');
 
 
 //Access permits
@@ -25,7 +25,7 @@ app.use(bodyParser.json());//parsea el cuerpo y lo trata como json
 app.use( bodyParser.text({type: 'application/json'}) );
 app.use(bodyParser.urlencoded({ extended: true }));
 
-var Schema = mongoose.Schema;
+// var Schema = mongoose.Schema;
 // var User = require("./user").User;
 // mongoose.connect("mongodb://cdt URG:cdt.desa.3.123@ds117623.mlab.com:17623/urgmaps");
 //

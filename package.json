@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parse": "^0.1.0",
+    "body-parser": "^1.18.3",
     "expres": "0.0.5",
     "mongoose": "^5.2.17"
   }
