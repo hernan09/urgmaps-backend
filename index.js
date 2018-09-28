@@ -1,12 +1,11 @@
 'use strict';
 
-var express = require('express');
-var bodyParser = require('body-parser');
+const express = require('express');
+const bodyParser = require('body-parser');
 const cors = require('cors');
-var app = express();
+const app = express();
 const server = require('http').createServer(app)
-var mongoose = require("mongoose");
-
+const mongoose = require("mongoose");
 
 //Access permits
 app.use(function(req, res, next) {
@@ -18,15 +17,12 @@ app.use(function(req, res, next) {
 
 app.use(cors(true));
 app.options('*', cors());
-
 app.use(express.static('public'));
-
-server.listen(process.env.PORT || 8080);
-
 app.use(bodyParser.json());//parsea el cuerpo y lo trata como json
 app.use( bodyParser.text({type: 'application/json'}) );
 app.use(bodyParser.urlencoded({ extended: true }));
 
+server.listen(process.env.PORT || 8080);
 // mongoose.connect("mongodb://cdtURG:cdt.desa.3.123@ds117623.mlab.com:17623/urgmaps", { useNewUrlParser: true });
 // var Schema = mongoose.Schema;
 
