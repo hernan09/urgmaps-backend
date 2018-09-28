@@ -1,24 +1,47 @@
 'use strict';
 
-const express = require('express');
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const app = express();
-const mongoose = require("mongoose");
+var express = require('express');
+// const cors = require('cors');
+var app = express();
+var bodyParser = require('body-parser')
+
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
+
+var cors = require('express-cross');
 
 app.use(cors(true));
-app.options('*', cors());
+
+app.use(express.static(__dirname + '/public'));
+
+app.set('port', (process.env.PORT || 3200));
+
+// app.options('*', cors());
 app.use(bodyParser.json());//parsea el cuerpo y lo trata como json
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use( bodyParser.text({type: 'application/json'}) );
-app.use(express.static('public'));
+// app.use( bodyParser.text({type: 'application/json'}) );
+
+// app.use(express.static('public'));
 
 const server = require('http').createServer(app)
-server.listen(process.env.PORT || 3100);
+// server.listen(process.env.PORT || 3200);
 
-app.get('/test', function(req, res) {
-  res.send('hello world');
+app.get('/test', function (req, res) {
+  res.send('POST request to the homepage');
 });
+
+
+
+app.listen(app.get('port'), function() {
+  console.log('Node app is running on port', app.get('port'));
+});
+
+
+const mongoose = require("mongoose");
+
 mongoose.connect("mongodb://cdtURG:cdt.desa.3.123@ds117623.mlab.com:17623/urgmaps", { useNewUrlParser: true });
 var Schema = mongoose.Schema;
 
@@ -70,4 +93,6 @@ app.post("/saveLocation",function(req,res){
             res.send(String(err));
         }
     })
+
+    res.send("save data");
 })
