@@ -58,8 +58,17 @@ var location_schema = new Schema({
     lng:Number,
     state:String
 })
+var user_schema = new Schema({
+  nombre:String,
+  apellido:String,
+  dni:String,
+  contraseña:String,
+  idIMEI:String,
+  Ambulancia:String
+})
 
 var Location = mongoose.model("Location",location_schema);
+var User = mongoose.model("User",user_schema);
 
 app.post("/saveLocation",function(req,res){
     var location = new Location ({
@@ -73,6 +82,26 @@ app.post("/saveLocation",function(req,res){
         lat:12.123135,
         lng:312.132132,
         state: "activo"
+    });
+
+    location.save().then(function(us){
+      res.send(us);
+
+    },function(err){
+        if(err){
+            res.send(String(err));
+        }
+    })
+});
+
+app.post("/saveUser",function(req,res){
+    var user = new User ({
+      nombre:"admin",
+      apellido:"test",
+      dni:"12345678",
+      contraseña:"123",
+      idIMEI:"1234e",
+      Ambulancia:"abc123"
     });
 
     location.save().then(function(us){
