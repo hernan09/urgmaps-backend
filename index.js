@@ -123,7 +123,7 @@ app.post("/saveUser",function(req,res){
 
 app.post("/login",function(req,res){
     console.log("USER",req.body);
-    User.findOne({name:req.body.userName,password: req.body.password},'_id name  lastName  cel  dni idIMEI ambulance',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
+    User.findOne({name:req.body.name,password: req.body.password},'_id name  lastName  cel  dni idIMEI ambulance',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
         if(doc){
              res.send(doc)
         }else{
