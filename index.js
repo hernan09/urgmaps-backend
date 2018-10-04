@@ -126,12 +126,13 @@ app.post("/login",function(req,res){
     console.log("USER",req.body);
     User.findOne({name:req.body.userName,password: req.body.password},'_id name  lastName  cel  dni idIMEI ambulance',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
         if(doc){
+              console.log("doc",doc);
              res.send(doc)
         }else{
-            res.send("No se encontro al Usuario");
-
+            res.send("Usuario y/o contraseña incorrectos");
         }
         if(err){
+          console.log("err",err);
             res.send(String(err));
         }
     })
