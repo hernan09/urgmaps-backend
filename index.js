@@ -76,7 +76,7 @@ app.post("/saveLocation",function(req,res){
     });
 
     location.save().then(function(us){
-      res.send(doc);
+      res.send(us);
 
     },function(err){
         if(err){
