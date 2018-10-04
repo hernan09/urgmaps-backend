@@ -104,7 +104,7 @@ app.post("/saveUser",function(req,res){
       Ambulancia:"abc123"
     });
 
-    location.save().then(function(us){
+    user.save().then(function(us){
       res.send(us);
 
     },function(err){
