@@ -108,14 +108,6 @@ app.post("/saveUser",function(req,res){
       password:"123",
       idIMEI:"1234e",
       ambulance:"abc123"
-
-      name:String,
-      lastName:String,
-      cel:Number,
-      dni:String,
-      password:String,
-      idIMEI:String,
-      ambulance:String
     });
 
     user.save().then(function(us){
