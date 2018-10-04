@@ -59,12 +59,13 @@ var location_schema = new Schema({
     state:String
 })
 var user_schema = new Schema({
-  nombre:String,
-  apellido:String,
+  name:String,
+  lastName:String,
+  cel:Number,
   dni:String,
-  contraseña:String,
+  password:String,
   idIMEI:String,
-  Ambulancia:String
+  ambulance:String
 })
 
 var Location = mongoose.model("Location",location_schema);
@@ -96,12 +97,13 @@ app.post("/saveLocation",function(req,res){
 
 app.post("/saveUser",function(req,res){
     var user = new User ({
-      nombre:"admin",
-      apellido:"test",
+      name:"admin",
+      lastName:"test",
+      cel:12321321,
       dni:"12345678",
-      contraseña:"123",
+      password:"123",
       idIMEI:"1234e",
-      Ambulancia:"abc123"
+      ambulance:"abc123"
     });
 
     user.save().then(function(us){
@@ -117,8 +119,8 @@ app.post("/saveUser",function(req,res){
 
 
 app.post("/login",function(req,res){
-
-    User.findOne({email:req.body.userName,password: req.body.password},'_id name  lastName  state  cel province locality',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
+    console.log("USER",req.body);
+    User.findOne({email:req.body.userName,password: req.body.password},'_id name  lastName  cel  dni idIMEI ambulance',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
         if(doc){
              res.send(doc)
         }else{
