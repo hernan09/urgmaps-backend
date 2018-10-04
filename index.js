@@ -83,8 +83,6 @@ app.post("/saveLocation",function(req,res){
             res.send(String(err));
         }
     })
-
-    res.send("save data");
 });
 
 
