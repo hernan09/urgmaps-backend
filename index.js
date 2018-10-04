@@ -8,6 +8,7 @@ var bodyParser = require('body-parser')
 var cors = require('express-cross');
 
 app.use(cors(true));
+app.options('*', cors())
 
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
