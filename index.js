@@ -56,11 +56,10 @@ mongoose.connection.on('disconnected', function () {
 })
 
 var location_schema = new Schema({
-    idIMEI:Number,
+    idIMEI:String,
     destination: String,
     lat:Number,
-    lng:Number,
-    state:String
+    lng:Number
 });
 
 var user_schema = new Schema({
@@ -100,7 +99,7 @@ app.post("/saveLocation",function(req,res){
         idIMEI:req.body.IMEI,
         destination: req.body.destination,
         lat:req.body.lat,
-        lng:req.body.lng 
+        lng:req.body.lng
 
         // state:req.body.state
         // idIMEI:123456789,
