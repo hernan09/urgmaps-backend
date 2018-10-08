@@ -100,7 +100,7 @@ app.post("/saveLocation",function(req,res){
         idIMEI:req.body.IMEI,
         destination: req.body.destination,
         lat:req.body.lat,
-        lng:req.body.lng
+        lng:req.body.lng 
 
         // state:req.body.state
         // idIMEI:123456789,
