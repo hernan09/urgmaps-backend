@@ -99,23 +99,35 @@ app.post("/saveLocation",function(req,res){
   Ambulance.findOne({idIMEI:req.body.IMEI},'_id state',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
       if(doc){
            // res.send(doc)
-           console.log("state",doc);
-           var location = new Location ({
-               idIMEI:req.body.IMEI,
-               destination: req.body.destination,
-               lat:req.body.lat,
-               lng:req.body.lng
-           });
+           console.log("state",doc.state == 'Activo');
+           if (doc.state == 'Activo') {
+             var location = new Location ({
+                 idIMEI:req.body.IMEI,
+                 destination: req.body.destination,
+                 lat:req.body.lat,
+                 lng:req.body.lng
+             });
 
-           location.save().then(function(us){
-             res.send(us);
+             location.save().then(function(us){
+               // res.send(us);
 
-           },function(err){
-               if(err){
-                   res.send(String(err));
-               }
-           });
+               Ambulance.update({id:doc._id},{state: "Inactivo"},function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
+                   if(doc){
+                     console.log("update",doc);
+                    res.send(doc);
+                   }else{
+                       res.send("No se pudo actualizar estado");
+                   }
+               })
 
+             },function(err){
+                 if(err){
+                     res.send(String(err));
+                 }
+             });
+           }else {
+             res.send("No esta activo por el momento");
+           }
       }else{
           res.send("No se encontro IMEI");
       }
