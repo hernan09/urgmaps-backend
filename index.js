@@ -110,8 +110,8 @@ app.post("/saveLocation",function(req,res){
 
              location.save().then(function(us){
                // res.send(us);
-
-               Ambulance.update({id:doc._id},{state: "Inactivo"},function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
+               console.log("doc._id",doc._id);
+               Ambulance.update({_id:doc._id},{state: "Inactivo"},function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
                    if(doc){
                      console.log("update",doc);
                     res.send(doc);
