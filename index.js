@@ -95,27 +95,35 @@ var User = mongoose.model("User",user_schema);
 var Ambulance = mongoose.model("Ambulance",ambulance_schema);
 
 app.post("/saveLocation",function(req,res){
-    var location = new Location ({
-        idIMEI:req.body.IMEI,
-        destination: req.body.destination,
-        lat:req.body.lat,
-        lng:req.body.lng
 
-        // state:req.body.state
-        // idIMEI:123456789,
-        // destination: "La valle 400",
-        // lat:12.123135,
-        // lng:312.132132
-    });
+  Ambulance.findOne({name:req.body.IMEI},'state',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
+      if(doc){
+           // res.send(doc)
+           console.log("state",state);
+           var location = new Location ({
+               idIMEI:req.body.IMEI,
+               destination: req.body.destination,
+               lat:req.body.lat,
+               lng:req.body.lng
+           });
 
-    location.save().then(function(us){
-      res.send(us);
+           location.save().then(function(us){
+             res.send(us);
 
-    },function(err){
-        if(err){
-            res.send(String(err));
-        }
-    })
+           },function(err){
+               if(err){
+                   res.send(String(err));
+               }
+           });
+
+      }else{
+          res.send("No se encontro IMEI");
+      }
+      if(err){
+          res.send(String(err));
+      }
+  })
+
 });
 
 app.post("/saveUser",function(req,res){
