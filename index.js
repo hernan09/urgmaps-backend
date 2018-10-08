@@ -99,7 +99,7 @@ app.post("/saveLocation",function(req,res){
   Ambulance.findOne({idIMEI:req.body.IMEI},'_id state',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
       if(doc){
            // res.send(doc)
-           console.log("state",state);
+           console.log("state",doc);
            var location = new Location ({
                idIMEI:req.body.IMEI,
                destination: req.body.destination,
