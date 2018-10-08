@@ -78,16 +78,16 @@ var User = mongoose.model("User",user_schema);
 
 app.post("/saveLocation",function(req,res){
     var location = new Location ({
-        // IMEI:req.body.IMEI,
-        // destination: req.body.destination,
-        // lat:req.body.lat,
-        // lng:req.body.lng,
+        idIMEI:req.body.IMEI,
+        destination: req.body.destination,
+        lat:req.body.lat,
+        lng:req.body.lng
+
         // state:req.body.state
-        idIMEI:123456789,
-        destination: "La valle 400",
-        lat:12.123135,
-        lng:312.132132,
-        state: "activo"
+        // idIMEI:123456789,
+        // destination: "La valle 400",
+        // lat:12.123135,
+        // lng:312.132132
     });
 
     location.save().then(function(us){
