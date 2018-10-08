@@ -57,7 +57,7 @@ mongoose.connection.on('disconnected', function () {
 
 var location_schema = new Schema({
     idIMEI:String,
-    destination: String,
+    nameAddress: String,
     lat:Number,
     lng:Number
 });
@@ -104,7 +104,7 @@ app.post("/saveLocation",function(req,res){
            if (doc.state == 'Activo') {
              var location = new Location ({
                  idIMEI:req.body.IMEI,
-                 destination: req.body.destination,
+                 nameAddress: req.body.nameAddress,
                  lat:req.body.lat,
                  lng:req.body.lng
              });
