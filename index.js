@@ -109,16 +109,16 @@ app.post("/saveLocation",function(req,res){
              });
 
              location.save().then(function(us){
-               // res.send(us);
+               res.send(us);
                console.log("doc._id",doc._id);
-               Ambulance.update({_id:doc._id},{state: "Inactivo"},function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
-                   if(doc){
-                     console.log("update",doc);
-                    res.send(doc);
-                   }else{
-                       res.send("No se pudo actualizar estado");
-                   }
-               })
+               // Ambulance.update({_id:doc._id},{state: "Inactivo"},function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
+               //     if(doc){
+               //       console.log("update",doc);
+               //      res.send(doc);
+               //     }else{
+               //         res.send("No se pudo actualizar estado");
+               //     }
+               // })
 
              },function(err){
                  if(err){
@@ -192,4 +192,11 @@ app.post("/login",function(req,res){
         }
     })
 
+})
+
+app.post("/getDataAmbulance",function(req,res){
+  Ambulance.find(function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
+      console.log(doc);
+      res.send(doc);
+  })
 })
