@@ -74,6 +74,7 @@ var user_schema = new Schema({
 
 var ambulance_schema = new Schema({
     idIMEI:String,
+    ambulance:String,
     cel:Number,
     patent:String,
     driver:String,
@@ -161,11 +162,12 @@ app.post("/saveUser",function(req,res){
 
 app.post("/saveAmbulance",function(req,res){
     var ambulance = new Ambulance ({
-      idIMEI:"12345678e",
-      cel:"1154112906",
-      ambulance:"abc123",
-      driver: "Emiliano Insfran",
-      state:"Activo"
+      idIMEI:req.body.idIMEI,
+      cel:req.body.cel,
+      ambulance:req.body.ambulance,
+      patent:req.body.ambulance,
+      driver: req.body.driver,
+      state:req.body.state
     });
 
     ambulance.save().then(function(us){
