@@ -96,7 +96,7 @@ var Ambulance = mongoose.model("Ambulance",ambulance_schema);
 
 app.post("/saveLocation",function(req,res){
 
-  Ambulance.findOne({name:req.body.IMEI},'state',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
+  Ambulance.findOne({idIMEI:req.body.IMEI},'state',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
       if(doc){
            // res.send(doc)
            console.log("state",state);
