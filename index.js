@@ -73,8 +73,27 @@ var user_schema = new Schema({
   ambulance:String
 })
 
+var ambulance_schema = new Schema({
+    idIMEI:String,
+    cel:Number,
+    patent:String,
+    driver:String,
+    state:String
+  })
+
+var emergency_schema = new Schema({
+    idIMEI:String,
+    positionInitial:Array,
+    positionFinal:Array,
+    timeDear:String,
+    timeElapsed:String,
+    takenTravel:Array,
+    estimatedTravel:Array
+})
+
 var Location = mongoose.model("Location",location_schema);
 var User = mongoose.model("User",user_schema);
+var Ambulance = mongoose.model("Ambulance",ambulance_schema);
 
 app.post("/saveLocation",function(req,res){
     var location = new Location ({
@@ -112,6 +131,25 @@ app.post("/saveUser",function(req,res){
     });
 
     user.save().then(function(us){
+      res.send(us);
+
+    },function(err){
+        if(err){
+            res.send(String(err));
+        }
+    })
+});
+
+app.post("/saveAmbulance",function(req,res){
+    var ambulance = new Ambulance ({
+      idIMEI:"12345678e",
+      cel:"1154112906",
+      ambulance:"abc123",
+      driver: "Emiliano Insfran",
+      state:"Activo"
+    });
+
+    ambulance.save().then(function(us){
       res.send(us);
 
     },function(err){
