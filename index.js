@@ -62,6 +62,13 @@ var location_schema = new Schema({
     lng:Number
 });
 
+var locationIndom_schema = new Schema({
+    idIMEI:String,
+    nameAddress: String,
+    lat:Number,
+    lng:Number
+});
+
 var user_schema = new Schema({
   name:String,
   lastName:String,
@@ -91,9 +98,35 @@ var emergency_schema = new Schema({
     estimatedTravel:Array
 })
 
-var Location = mongoose.model("Location",location_schema);
+
+var patient_schema = new Schema({
+    idIMEI:String,
+    ambulance:String,
+    cel:Number,
+    patent:String,
+    driver:String,
+    state:String
+  })
+
+var emergencyIndom_schema = new Schema({
+    idIMEI:String,
+    positionInitial:Array,
+    positionFinal:Array,
+    timeDear:String,
+    timeElapsed:String,
+    takenTravel:Array,
+    estimatedTravel:Array
+})
 var User = mongoose.model("User",user_schema);
+
+/*urg*/
+var Location = mongoose.model("Location",location_schema);
 var Ambulance = mongoose.model("Ambulance",ambulance_schema);
+
+/*indom*/
+var LocationIndom = mongoose.model("LocationIndom",locationIndom_schema);
+var Patient = mongoose.model("Patient",patient_schema);
+var EmergencyIndom = mongoose.model("EmergencyIndom",emergencyIndom_schema);
 
 app.post("/saveLocation",function(req,res){
   console.log("IMEI",req.body.IMEI)
@@ -110,6 +143,50 @@ app.post("/saveLocation",function(req,res){
              });
 
              location.save().then(function(us){
+               res.send(us);
+               console.log("doc._id",doc._id);
+               // Ambulance.update({_id:doc._id},{state: "Inactivo"},function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
+               //     if(doc){
+               //       console.log("update",doc);
+               //      res.send(doc);
+               //     }else{
+               //         res.send("No se pudo actualizar estado");
+               //     }
+               // })
+
+             },function(err){
+                 if(err){
+                     res.send(String(err));
+                 }
+             });
+           }else {
+             res.send("No esta activo por el momento");
+           }
+      }else{
+          res.send("No se encontro IMEI");
+      }
+      if(err){
+          res.send(String(err));
+      }
+  })
+
+});
+
+app.post("/saveLocationIndom",function(req,res){
+  console.log("IMEI",req.body.IMEI)
+  Patient.findOne({idIMEI:req.body.IMEI},'_id state',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
+      if(doc){
+           // res.send(doc)
+           console.log("state",doc.state == 'Activo');
+           if (doc.state == 'Activo') {
+             var locationIndom = new LocationIndom ({
+                 idIMEI:req.body.IMEI,
+                 nameAddress: req.body.nameAddress,
+                 lat:req.body.lat,
+                 lng:req.body.lng
+             });
+
+             locationIndom.save().then(function(us){
                res.send(us);
                console.log("doc._id",doc._id);
                // Ambulance.update({_id:doc._id},{state: "Inactivo"},function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
@@ -171,6 +248,25 @@ app.post("/saveAmbulance",function(req,res){
     });
 
     ambulance.save().then(function(us){
+      res.send(us);
+
+    },function(err){
+        if(err){
+            res.send(String(err));
+        }
+    })
+});
+app.post("/savePatient",function(req,res){
+    var patient = new Patient ({
+      idIMEI:req.body.idIMEI,
+      cel:req.body.cel,
+      ambulance:req.body.ambulance,
+      patent:req.body.ambulance,
+      driver: req.body.driver,
+      state:req.body.state
+    });
+
+    patient.save().then(function(us){
       res.send(us);
 
     },function(err){
