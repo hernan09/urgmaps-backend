@@ -174,7 +174,7 @@ app.post("/saveLocation",function(req,res){
 
 app.post("/saveLocationIndom",function(req,res){
   console.log("IMEI",req.body.IMEI)
-  Patient.findOne({idIMEI:req.body.IMEI},'_id state',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
+  Ambulance.findOne({idIMEI:req.body.IMEI},'_id state',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
       if(doc){
            // res.send(doc)
            console.log("state",doc.state == 'Activo');
