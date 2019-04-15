@@ -117,6 +117,19 @@ var emergencyIndom_schema = new Schema({
     takenTravel:Array,
     estimatedTravel:Array
 })
+
+//nuevo prototipo urg maps
+var saveLocation_schema = new Schema({
+  imei: Number,
+  latitude:Number,
+  longitude:Number,
+  dataAndTime: String,
+  state:String,
+  address:String,
+})
+
+
+
 var User = mongoose.model("User",user_schema);
 
 /*urg*/
@@ -128,6 +141,10 @@ var LocationIndom = mongoose.model("LocationIndom",locationIndom_schema);
 var Patient = mongoose.model("Patient",patient_schema);
 var EmergencyIndom = mongoose.model("EmergencyIndom",emergencyIndom_schema);
 
+//nuevo prototipo
+var PositionEmergency = mongoose.model("PositionEmergency",saveLocation_schema);
+
+/*****/
 app.post("/saveLocation",function(req,res){
   console.log("IMEI",req.body.IMEI)
   Ambulance.findOne({idIMEI:req.body.IMEI},'_id state',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
@@ -236,6 +253,67 @@ app.post("/saveUser",function(req,res){
         }
     })
 });
+
+//nuevo prototipo
+
+app.post("/emergencyPlace",function(req,res){
+    var location = new PositionEmergency ({
+      imei: req.body.imei,
+      latitude:req.body.latitude,
+      longitude:req.body.longitude,
+      dataAndTime: req.body.dataAndTime,
+      state:req.body.state,
+      address: req.body.address
+    });
+
+    location.save().then(function(us){
+    res.send(us);
+
+    },function(err){
+        if(err){
+            res.send(String(err));
+        }
+    })
+});
+
+app.post("/getLocationEmergency",function(req,res){
+    PositionEmergency.find(function(err,doc){// trae todos los registros del documento
+        console.log(doc);
+        res.send(doc);
+    });
+});
+
+app.post("/putLocationEmergency",function(req,res){
+  console.log("IMEI",req.body.imei)
+  PositionEmergency.findOne({imei:req.body.imei},'_id state',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
+      if(doc){
+           console.log("update",doc);
+           if (doc.state == 'Pending') {
+
+             PositionEmergency.update({_id:doc._id},{state: "Processed"},function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
+                 if(doc){
+                   console.log("update",doc);
+                   res.send(doc);
+                 }else{
+                    res.send("No se pudo actualizar estado");
+                 }
+             })
+
+           }else {
+             res.send("No esta activo por el momento");
+           }
+      }else{
+        console.log("No se encontro IMEI")
+          res.send("No se encontro IMEI");
+      }
+      if(err){
+          res.send(String(err));
+      }
+  })
+
+});
+
+/*------------------------------*/
 
 app.post("/saveAmbulance",function(req,res){
     var ambulance = new Ambulance ({
