@@ -284,8 +284,8 @@ app.post("/getLocationEmergency",function(req,res){
 });
 
 app.post("/putLocationEmergency",function(req,res){
-  console.log("IMEI",req.body.imei)
-  PositionEmergency.findOne({imei:req.body.imei},'_id state',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
+  console.log("IMEI",req.body.id)
+  PositionEmergency.findOne({_id:req.body.id},'_id state',function(err,doc){// este metodo encuentra todos los documentos(objeto) que sea el email y pass que pasaste en array
       if(doc){
            console.log("update",doc);
            if (doc.state == 'Pending') {
